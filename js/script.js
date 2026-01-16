@@ -401,10 +401,8 @@ const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
 // If no saved preference, use system preference
 if (!localStorage.getItem('theme')) {
-    if (prefersDarkScheme.matches) {
-        htmlElement.setAttribute('data-theme', 'dark');
-    } else {
-        htmlElement.setAttribute('data-theme', 'light');
+    htmlElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
     }
 }
 
@@ -424,3 +422,4 @@ document.addEventListener('keydown', (e) => {
         toggleTheme();
     }
 });
+
