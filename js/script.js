@@ -379,9 +379,14 @@ const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
 // If no saved preference, use system preference
 if (!localStorage.getItem('theme')) {
-    htmlElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
+
+    if (prefersDarkScheme.matches) {
+        htmlElement.setAttribute('data-theme', 'dark');
+    } else {
+        htmlElement.setAttribute('data-theme', 'light');
     }
+
+    
 }
 
 // Listen for system theme changes
@@ -400,5 +405,6 @@ document.addEventListener('keydown', (e) => {
         toggleTheme();
     }
 });
+
 
 
