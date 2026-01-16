@@ -356,4 +356,71 @@ if ('serviceWorker' in navigator) {
         //     .then(reg => console.log('Service Worker registered'))
         //     .catch(err => console.log('Service Worker registration failed'));
     });
+
 }
+// ========================================
+// Dark Mode / Light Mode Toggle
+// ========================================
+
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
+
+// Apply saved theme on page load
+if (currentTheme === 'light') {
+    htmlElement.setAttribute('data-theme', 'light');
+}
+
+// Toggle theme function
+const toggleTheme = () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    // Apply new theme
+    htmlElement.setAttribute('data-theme', newTheme);
+    
+    // Save preference to localStorage
+    localStorage.setItem('theme', newTheme);
+    
+    // Add animation class
+    document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+    
+    // Optional: Track theme change (for analytics)
+    console.log(`Theme changed to: ${newTheme}`);
+};
+
+// Add click event listener
+if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+}
+
+// Optional: Detect system preference
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+// If no saved preference, use system preference
+if (!localStorage.getItem('theme')) {
+    if (prefersDarkScheme.matches) {
+        htmlElement.setAttribute('data-theme', 'dark');
+    } else {
+        htmlElement.setAttribute('data-theme', 'light');
+    }
+}
+
+// Listen for system theme changes
+prefersDarkScheme.addEventListener('change', (e) => {
+    // Only apply if user hasn't manually set a preference
+    if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        htmlElement.setAttribute('data-theme', newTheme);
+    }
+});
+
+// Keyboard shortcut: Ctrl/Cmd + Shift + D to toggle theme
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+        e.preventDefault();
+        toggleTheme();
+    }
+});
