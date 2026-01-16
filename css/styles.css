@@ -55,7 +55,270 @@
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Space Grotesk', 'Inter', sans-serif;
 }
+/* ========================================
+   Dark Mode & Light Mode Variables
+   ======================================== */
 
+:root {
+    /* Existing dark mode colors (default) */
+    --color-primary: #00ff87;
+    --color-primary-dark: #00cc6d;
+    --color-secondary: #a78bfa;
+    --color-accent: #ff6b6b;
+    --color-warning: #ffd93d;
+    --color-info: #06b6d4;
+    
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #16213e;
+    --bg-glass: rgba(26, 26, 46, 0.7);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0c8;
+    --text-muted: #6b6b8a;
+    
+    --gradient-primary: linear-gradient(135deg, #00ff87 0%, #06b6d4 100%);
+    --gradient-secondary: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+    --gradient-accent: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+    
+    /* ... keep all your other existing variables ... */
+}
+
+/* Light Mode Colors */
+[data-theme="light"] {
+    --color-primary: #00cc6d;
+    --color-primary-dark: #00a359;
+    --color-secondary: #8b5cf6;
+    --color-accent: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #0ea5e9;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --bg-glass: rgba(248, 249, 250, 0.8);
+    
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    
+    --gradient-primary: linear-gradient(135deg, #00cc6d 0%, #0ea5e9 100%);
+    --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    --gradient-accent: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
+    
+    /* Light mode specific adjustments */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 40px rgba(0, 204, 109, 0.2);
+}
+
+/* Smooth theme transition */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========================================
+   Theme Toggle Button
+   ======================================== */
+
+.theme-toggle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    margin: 0 1rem;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-primary);
+    transform: rotate(180deg);
+}
+
+.theme-toggle svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0);
+}
+
+.theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--color-primary);
+}
+
+/* Light mode toggle states */
+[data-theme="light"] .theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--color-warning);
+}
+
+[data-theme="light"] .theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0);
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Light Mode Specific Adjustments
+   ======================================== */
+
+/* Navbar in light mode */
+[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Cards and glassmorphism in light mode */
+[data-theme="light"] .difference-card,
+[data-theme="light"] .testimonial-card,
+[data-theme="light"] .mini-card,
+[data-theme="light"] .contact-method {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .difference-card:hover,
+[data-theme="light"] .testimonial-card:hover,
+[data-theme="light"] .mini-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 12px 40px rgba(0, 204, 109, 0.2);
+}
+
+/* Hero gradient orbs in light mode */
+[data-theme="light"] .orb-1 {
+    background: radial-gradient(circle, rgba(0, 204, 109, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="light"] .orb-2 {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="light"] .orb-3 {
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+}
+
+/* Service tabs in light mode */
+[data-theme="light"] .tab-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .tab-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+/* Gallery filters in light mode */
+[data-theme="light"] .filter-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons in light mode */
+[data-theme="light"] .btn-hero-secondary,
+[data-theme="light"] .btn-innovation-outline {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .btn-hero-secondary:hover,
+[data-theme="light"] .btn-innovation-outline:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Footer in light mode */
+[data-theme="light"] .footer {
+    background: var(--bg-secondary);
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile menu in light mode */
+[data-theme="light"] .nav-menu {
+    background: var(--bg-primary);
+}
+
+/* Ensure text contrast in light mode */
+[data-theme="light"] .hero-badge,
+[data-theme="light"] .section-badge {
+    background: rgba(0, 204, 109, 0.1);
+    border-color: rgba(0, 204, 109, 0.3);
+}
+
+[data-theme="light"] .visual-overlay {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 0%, transparent 50%);
+}
+
+/* Stat cards in light mode */
+[data-theme="light"] .hero-stats {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Timeline in light mode */
+[data-theme="light"] .process-timeline {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Code/tech specs in light mode */
+[data-theme="light"] .tech-specs li {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Contact visual cards in light mode */
+[data-theme="light"] .card-overlay-contact {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 100%);
+}
+
+/* Business hours in light mode */
+[data-theme="light"] .business-hours {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Image overlays in light mode */
+[data-theme="light"] .gallery-overlay {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, transparent 60%);
+}
+
+/* Back to top button in light mode */
+[data-theme="light"] .back-to-top {
+    box-shadow: 0 4px 16px rgba(0, 204, 109, 0.3);
+}
 * {
     margin: 0;
     padding: 0;
@@ -1944,4 +2207,5 @@ button {
         background: white;
         color: black;
     }
+
 }
